@@ -232,7 +232,7 @@ class linknetUp(nn.Module):
         self.convbnrelu1 = conv2DBatchNormRelu(in_channels, n_filters/2, k_size=1, stride=1, padding=1)
 
         # B, C/2, H, W -> B, C/2, H, W
-        self.deconvbnrelu2 = nn.deconv2DBatchNormRelu(n_filters/2, n_filters/2, k_size=3,  stride=2, padding=0,)
+        self.deconvbnrelu2 = deconv2DBatchNormRelu(n_filters/2, n_filters/2, k_size=3,  stride=2, padding=0,)
 
         # B, C/2, H, W -> B, C, H, W
         self.convbnrelu3 = conv2DBatchNormRelu(n_filters/2, n_filters, k_size=1, stride=1, padding=1)

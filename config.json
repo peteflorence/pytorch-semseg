@@ -1,7 +1,7 @@
 {
   "pascal":
   {
-    "data_path": "/home/gpu_users/meetshah/segdata/pascal/VOCdevkit/VOC2012/"
+    "data_path": "/home/peteflo/VOCdevkit/VOC2012/"
   },
 
   "sbd":
@@ -11,7 +11,7 @@
 
   "camvid":
   {
-    "data_path": "/Users/meet/data/CamVid/"
+    "data_path": "/home/peteflo/pytorch-semseg/CamVid/"
   },
   "ade20k":
   {

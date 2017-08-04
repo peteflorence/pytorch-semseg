@@ -91,7 +91,7 @@ class camvidLoader(data.Dataset):
             return rgb
 
 if __name__ == '__main__':
-    local_path = '/home/meetshah1995/datasets/segnet/CamVid'
+    local_path = "/home/peteflo/pytorch-semseg/CamVid/"
     dst = camvidLoader(local_path, is_transform=True)
     trainloader = data.DataLoader(dst, batch_size=4)
     for i, data in enumerate(trainloader):

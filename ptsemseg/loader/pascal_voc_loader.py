@@ -117,15 +117,16 @@ class pascalVOCLoader(data.Dataset):
         sbd_path = get_data_path('sbd')
         voc_path = get_data_path('pascal')
 
-        target_path = self.root + '/SegmentationClass/pre_encoded/'
+        target_path = self.root# + '/SegmentationClass/pre_encoded/'
         if not os.path.exists(target_path):
             os.makedirs(target_path)
 
-        sbd_train_list = tuple(open(sbd_path + 'dataset/train.txt', 'r'))
-        sbd_train_list = [id_.rstrip() for id_ in sbd_train_list]
+        #sbd_train_list = tuple(open(sbd_path + 'dataset/train.txt', 'r'))
+        #sbd_train_list = [id_.rstrip() for id_ in sbd_train_list]
         
-        self.files['train_aug'] = self.files['train'] + sbd_train_list
+        self.files['train_aug'] = self.files['train']# + sbd_train_list
 
+        return
         if pre_encode:
             print "Pre-encoding segmentation masks..."
             for i in tqdm(sbd_train_list):
@@ -141,7 +142,7 @@ class pascalVOCLoader(data.Dataset):
                 m.imsave(target_path + i + '.png', lbl)
 
 if __name__ == '__main__':
-    local_path = '/home/gpu_users/meetshah/segdata/pascal/VOCdevkit/VOC2012'
+    local_path = '/home/peteflo/VOCdevkit/VOC2012'
     dst = pascalVOCLoader(local_path, is_transform=True)
     trainloader = data.DataLoader(dst, batch_size=4)
     for i, data in enumerate(trainloader):

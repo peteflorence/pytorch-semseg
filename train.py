@@ -26,19 +26,21 @@ def train(args):
     trainloader = data.DataLoader(loader, batch_size=args.batch_size, num_workers=4, shuffle=True)
 
     # Setup visdom for visualization
-    vis = visdom.Visdom()
+    #vis = visdom.Visdom()
 
-    loss_window = vis.line(X=torch.zeros((1,)).cpu(),
-                           Y=torch.zeros((1)).cpu(),
-                           opts=dict(xlabel='minibatches',
-                                     ylabel='Loss',
-                                     title='Training Loss',
-                                     legend=['Loss']))
+    #loss_window = vis.line(X=torch.zeros((1,)).cpu(),
+                           # Y=torch.zeros((1)).cpu(),
+                           # opts=dict(xlabel='minibatches',
+                           #           ylabel='Loss',
+                           #           title='Training Loss',
+                           #           legend=['Loss']))
 
     # Setup Model
+    print args.arch
     model = get_model(args.arch, n_classes)
 
     if torch.cuda.is_available():
+        print "cuda is available"
         model.cuda(0)
         test_image, test_segmap = loader[0]
         test_image = Variable(test_image.unsqueeze(0).cuda(0))
@@ -61,6 +63,8 @@ def train(args):
             poly_lr_scheduler(optimizer, args.l_rate, iter)
             
             optimizer.zero_grad()
+            print type(images)
+            print "was type of images"
             outputs = model(images)
 
             loss = cross_entropy2d(outputs, labels)
@@ -89,13 +93,13 @@ def train(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Hyperparams')
-    parser.add_argument('--arch', nargs='?', type=str, default='fcn8s', 
+    parser.add_argument('--arch', nargs='?', type=str, default='linknet', 
                         help='Architecture to use [\'fcn8s, unet, segnet etc\']')
     parser.add_argument('--dataset', nargs='?', type=str, default='pascal', 
                         help='Dataset to use [\'pascal, camvid, ade20k etc\']')
-    parser.add_argument('--img_rows', nargs='?', type=int, default=256, 
+    parser.add_argument('--img_rows', nargs='?', type=int, default=360, 
                         help='Height of the input image')
-    parser.add_argument('--img_cols', nargs='?', type=int, default=256, 
+    parser.add_argument('--img_cols', nargs='?', type=int, default=480, 
                         help='Height of the input image')
     parser.add_argument('--n_epoch', nargs='?', type=int, default=100, 
                         help='# of the epochs')

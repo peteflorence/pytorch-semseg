@@ -27,6 +27,9 @@ def get_model(name, n_classes):
                       is_batchnorm=True,
                       in_channels=3,
                       is_deconv=True)
+    elif name == 'linknet':
+        model = model(n_classes=n_classes)
+
     else:
         raise 'Model {} not available'.format(name)
 
