@@ -13,14 +13,14 @@ class camvidLoader(data.Dataset):
     def __init__(self, root, split="train", is_transform=False, img_size=None):
         self.root = root
         self.split = split
-        self.img_size = [360, 480]
+        self.img_size = [320, 480]
         self.is_transform = is_transform
         self.mean = np.array([104.00699, 116.66877, 122.67892])
         self.n_classes = 13
         self.files = collections.defaultdict(list)
 
         for split in ["train", "test", "val"]:
-            file_list = os.listdir(root + '/' + split)
+            file_list = os.listdir(os.path.join(root + split))
             self.files[split] = file_list
 
     def __len__(self):
@@ -91,7 +91,7 @@ class camvidLoader(data.Dataset):
             return rgb
 
 if __name__ == '__main__':
-    local_path = '/home/meetshah1995/datasets/segnet/CamVid'
+    local_path = "/home/peteflo/pytorch-semseg/CamVid-resized/"
     dst = camvidLoader(local_path, is_transform=True)
     trainloader = data.DataLoader(dst, batch_size=4)
     for i, data in enumerate(trainloader):

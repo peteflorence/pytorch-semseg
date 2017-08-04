@@ -1,4 +1,5 @@
 import torch.nn as nn
+import time
 
 from utils import *
 
@@ -12,7 +13,7 @@ Resnets = {'resnet18' :{'layers':[2, 2, 2, 2],'filters':[64, 128, 256, 512], 'bl
 
 class pspnet(nn.Module):
 
-    def __init__(self, resnet='resnet18', feature_scale=4, n_classes=21, is_deconv=True, in_channels=3, is_batchnorm=True):
+    def __init__(self, resnet='resnet18', feature_scale=4, n_classes=25, is_deconv=True, in_channels=3, is_batchnorm=True):
         super(pspnet, self).__init__()
         self.is_deconv = is_deconv
         self.in_channels = in_channels
@@ -64,6 +65,7 @@ class pspnet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
+        time1 = time.time()
         # Encoder
         x = self.convbnrelu1(x)
         x = self.maxpool(x)
@@ -75,6 +77,8 @@ class pspnet(nn.Module):
 
         # Decoder with Skip Connections
         d4 = self.decoder4(e4)
+        print d4.size()
+        print e3.size()
         d4 = d4 + e3
         d3 = self.decoder3(d4)
         d3 = d3 + e2
@@ -87,4 +91,6 @@ class pspnet(nn.Module):
         f2 = self.finalconvbnrelu2(f1)
         f3 = self.finalconv3(f2)
 
+        time2 = time.time()
+        print '%s function took %0.3f ms' % ("forward", (time2-time1)*1000.0)
         return f3

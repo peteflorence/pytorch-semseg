@@ -11,6 +11,10 @@ from ptsemseg.models.linknet import *
 def get_model(name, n_classes):
     model = _get_model_instance(name)
 
+    print model
+    if name =='linknet':
+        return model(n_classes=n_classes)
+
     if name in ['fcn32s', 'fcn16s', 'fcn8s']:
         model = model(n_classes=n_classes)
         vgg16 = models.vgg16(pretrained=True)
@@ -27,9 +31,11 @@ def get_model(name, n_classes):
                       is_batchnorm=True,
                       in_channels=3,
                       is_deconv=True)
+
     else:
         raise 'Model {} not available'.format(name)
 
+    print "got through to here"
     return model
 
 def _get_model_instance(name):
@@ -40,5 +46,5 @@ def _get_model_instance(name):
         'unet': unet,
         'segnet': segnet,
         'pspnet': pspnet,
-        'linknet': linknet,
+        'linknet': pspnet,
     }[name]
