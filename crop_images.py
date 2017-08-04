@@ -50,8 +50,8 @@ def resizeDirectory(dir_name):
           filename_full_path = os.path.join(root, filename)
           if filename_full_path.endswith(".png"):
               print "found .png match: " + filename_full_path
-              output_full_path = filename_full_path.replace("train", "resized_train")
+              output_full_path = filename_full_path.replace("trainannot", "resized_trainannot")
               cropImage(filename_full_path, output_full_path)
 
-os.system("mkdir resized_train")
-resizeDirectory("train")
+os.system("mkdir resized_trainannot")
+resizeDirectory("trainannot")

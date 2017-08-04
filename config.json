@@ -11,7 +11,7 @@
 
   "camvid":
   {
-    "data_path": "/Users/meet/data/CamVid/"
+    "data_path": "/home/peteflo/pytorch-semseg/CamVid-resized/"
   },
   "ade20k":
   {

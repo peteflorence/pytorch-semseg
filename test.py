@@ -20,6 +20,7 @@ def test(args):
     # Setup image
     print "Read Input Image from : {}".format(args.img_path) 
     img = misc.imread(args.img_path)
+    print img.shape
 
     data_loader = get_loader(args.dataset)
     data_path = get_data_path(args.dataset)
@@ -46,6 +47,7 @@ def test(args):
     else:
         images = Variable(img)
 
+    print img.size()
     outputs = model(images)
     pred = np.squeeze(outputs.data.max(1)[1].cpu().numpy(), axis=1)
     decoded = loader.decode_segmap(pred[0])
@@ -55,13 +57,13 @@ def test(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Params')
-    parser.add_argument('--model_path', nargs='?', type=str, default='fcn8s_pascal_1_26.pkl', 
+    parser.add_argument('--model_path', nargs='?', type=str, default='linknet_camvid_1_99.pkl', 
                         help='Path to the saved model')
-    parser.add_argument('--dataset', nargs='?', type=str, default='pascal', 
+    parser.add_argument('--dataset', nargs='?', type=str, default='camvid', 
                         help='Dataset to use [\'pascal, camvid, ade20k etc\']')
-    parser.add_argument('--img_path', nargs='?', type=str, default=None, 
+    parser.add_argument('--img_path', nargs='?', type=str, default='CamVid-resized/train/0016E5_08640.png', 
                         help='Path of the input image')
-    parser.add_argument('--out_path', nargs='?', type=str, default=None, 
+    parser.add_argument('--out_path', nargs='?', type=str, default='test.png', 
                         help='Path of the output segmap')
     args = parser.parse_args()
     test(args)
